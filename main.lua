@@ -38,6 +38,9 @@ function love.resize(w, h)
 end
 
 function love.keypressed(key)
+    if key == 'space' then
+        bird:flap()
+    end
     if key == 'escape' or key == 'q' then
         love.event.quit()
     end

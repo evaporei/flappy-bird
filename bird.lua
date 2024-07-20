@@ -25,6 +25,10 @@ function Bird:update(dt)
     self.y = self.y + self.vy
 end
 
+function Bird:flap()
+    self.vy = -5
+end
+
 function Bird:render()
     love.graphics.draw(self.image, self.x, self.y)
 end
