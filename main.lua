@@ -1,6 +1,7 @@
 local push = require('push')
 
 local Bird = require('bird')
+local Pipe = require('pipe')
 
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
@@ -22,9 +23,14 @@ GROUND_SCROLL_SPEED = 60
 BACKGROUND_LOOPING_POINT = 413
 
 local bird = Bird.new()
+local pipes = {}
+
+local spawnTimer = 0
 
 function love.load()
     love.window.setTitle('Flappy Bird')
+
+    math.randomseed(os.time())
 
     push:setupScreen(GAME_WIDTH, GAME_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
         vsync = true,
@@ -53,6 +59,21 @@ function love.update(dt)
     groundScroll = (groundScroll + GROUND_SCROLL_SPEED * dt)
         % GAME_WIDTH
 
+    spawnTimer = spawnTimer + dt
+
+    if spawnTimer > 2 then
+        table.insert(pipes, Pipe.new())
+        spawnTimer = 0
+    end
+
+    for k, pipe in pairs(pipes) do
+        pipe:update(dt)
+
+        if pipe.x < -pipe.width then
+            table.remove(pipes, k)
+        end
+    end
+
     bird:update(dt)
 end
 
@@ -60,6 +81,10 @@ function love.draw()
     push:start()
 
     love.graphics.draw(background, -backgroundScroll, 0)
+
+    for _, pipe in pairs(pipes) do
+        pipe:render()
+    end
 
     love.graphics.draw(ground, -groundScroll, GAME_HEIGHT - 16)
 
