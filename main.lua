@@ -1,5 +1,7 @@
 local push = require('push')
 
+local Bird = require('bird')
+
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
 
@@ -19,6 +21,8 @@ GROUND_SCROLL_SPEED = 60
 
 BACKGROUND_LOOPING_POINT = 413
 
+local bird = Bird.new()
+
 function love.load()
     love.window.setTitle('Flappy Bird')
 
@@ -34,7 +38,7 @@ function love.resize(w, h)
 end
 
 function love.keypressed(key)
-    if key == 'escape' then
+    if key == 'escape' or key == 'q' then
         love.event.quit()
     end
 end
@@ -53,6 +57,8 @@ function love.draw()
     love.graphics.draw(background, -backgroundScroll, 0)
 
     love.graphics.draw(ground, -groundScroll, GAME_HEIGHT - 16)
+
+    bird:render()
 
     push:finish()
 end
