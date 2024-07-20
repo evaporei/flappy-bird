@@ -1,7 +1,7 @@
 local push = require('push')
 
 local Bird = require('bird')
-local Pipe = require('pipe')
+local PipePair = require('pipe_pair')
 
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
@@ -21,9 +21,13 @@ BACKGROUND_SCROLL_SPEED = 30
 GROUND_SCROLL_SPEED = 60
 
 BACKGROUND_LOOPING_POINT = 413
+GROUND_LOOPING_POINT = 576
 
 local bird = Bird.new()
-local pipes = {}
+local pipePairs = {}
+
+-- -267..-188
+local lastY = -PIPE_HEIGHT + math.random(80) + 20
 
 local spawnTimer = 0
 
@@ -57,20 +61,36 @@ function love.update(dt)
         % BACKGROUND_LOOPING_POINT
 
     groundScroll = (groundScroll + GROUND_SCROLL_SPEED * dt)
-        % GAME_WIDTH
+        % GROUND_LOOPING_POINT
 
     spawnTimer = spawnTimer + dt
 
     if spawnTimer > 2 then
-        table.insert(pipes, Pipe.new())
+    -- if spawnTimer > 1 then
+        local y = math.max(
+            -- -283
+            -PIPE_HEIGHT + 15,
+            math.min(
+                -- "-287..-168"
+                lastY + math.random(-20, 20),
+                -90
+                -- 288 -90 - 288
+                -- GAME_HEIGHT - 90 - PIPE_HEIGHT
+            )
+        )
+        lastY = y
+
+        table.insert(pipePairs, PipePair.new(y))
         spawnTimer = 0
     end
 
-    for k, pipe in pairs(pipes) do
-        pipe:update(dt)
+    for _, pair in pairs(pipePairs) do
+        pair:update(dt)
+    end
 
-        if pipe.x < -pipe.width then
-            table.remove(pipes, k)
+    for k, pair in pairs(pipePairs) do
+        if pair.remove then
+            table.remove(pipePairs, k)
         end
     end
 
@@ -82,8 +102,8 @@ function love.draw()
 
     love.graphics.draw(background, -backgroundScroll, 0)
 
-    for _, pipe in pairs(pipes) do
-        pipe:render()
+    for _, pairs in pairs(pipePairs) do
+        pairs:render()
     end
 
     love.graphics.draw(ground, -groundScroll, GAME_HEIGHT - 16)
