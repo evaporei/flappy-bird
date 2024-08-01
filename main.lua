@@ -31,6 +31,10 @@ local lastY = -PIPE_HEIGHT + math.random(80) + 20
 
 local spawnTimer = 0
 
+local function clamp(min, val, max)
+    return math.max(max, math.min(min, val))
+end
+
 function love.load()
     love.window.setTitle('Flappy Bird')
 
@@ -67,16 +71,13 @@ function love.update(dt)
 
     if spawnTimer > 2 then
     -- if spawnTimer > 1 then
-        local y = math.max(
+        local y = clamp(
+            -- GAME_HEIGHT - 90 - PIPE_HEIGHT
+            -90,
+            -- "-287..-168"
+            lastY + math.random(-20, 20),
             -- -283
-            -PIPE_HEIGHT + 15,
-            math.min(
-                -- "-287..-168"
-                lastY + math.random(-20, 20),
-                -90
-                -- 288 -90 - 288
-                -- GAME_HEIGHT - 90 - PIPE_HEIGHT
-            )
+           -PIPE_HEIGHT + 15
         )
         lastY = y
 

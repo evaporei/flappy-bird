@@ -5,8 +5,8 @@ PIPE_IMAGE = love.graphics.newImage('pipe.png')
 PIPE_HEIGHT = 288
 PIPE_WIDTH = 77
 
--- PIPE_SPEED = 60
-PIPE_SPEED = 160
+PIPE_SPEED = 60
+-- PIPE_SPEED = 160
 
 function Pipe.new(orientation, y)
     local self = {}
