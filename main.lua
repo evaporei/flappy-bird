@@ -78,12 +78,12 @@ function love.update(dt)
     if spawnTimer > 2 then
     -- if spawnTimer > 1 then
         local y = clamp(
-            -- GAME_HEIGHT - 90 - PIPE_HEIGHT
-            -90,
+            -- -232
+            GAME_HEIGHT - 90 - PIPE_HEIGHT,
             -- "-287..-168"
             lastY + math.random(-20, 20),
             -- -283
-           -PIPE_HEIGHT + 15
+            -PIPE_HEIGHT + 15
         )
         lastY = y
 
