@@ -25,6 +25,16 @@ function Bird:update(dt)
     self.y = self.y + self.vy
 end
 
+function Bird:collides(pipe)
+    if self.x > pipe.x + pipe.width or self.x + self.width < pipe.x then
+        return false
+    end
+    if self.y > pipe.y + pipe.height or self.y + self.height < pipe.y then
+        return false
+    end
+    return true
+end
+
 function Bird:flap()
     self.vy = -5
 end

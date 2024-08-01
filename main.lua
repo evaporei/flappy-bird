@@ -31,6 +31,8 @@ local lastY = -PIPE_HEIGHT + math.random(80) + 20
 
 local spawnTimer = 0
 
+local scrolling = true
+
 local function clamp(min, val, max)
     return math.max(max, math.min(min, val))
 end
@@ -61,6 +63,10 @@ function love.keypressed(key)
 end
 
 function love.update(dt)
+    if not scrolling then
+        return
+    end
+
     backgroundScroll = (backgroundScroll + BACKGROUND_SCROLL_SPEED * dt)
         % BACKGROUND_LOOPING_POINT
 
@@ -87,6 +93,12 @@ function love.update(dt)
 
     for _, pair in pairs(pipePairs) do
         pair:update(dt)
+
+        for _, pipe in pairs(pair.pipes) do
+            if bird:collides(pipe) then
+                scrolling = false
+            end
+        end
     end
 
     for k, pair in pairs(pipePairs) do

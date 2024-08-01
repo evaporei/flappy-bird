@@ -3,7 +3,7 @@ local Pipe = {}
 PIPE_IMAGE = love.graphics.newImage('pipe.png')
 
 PIPE_HEIGHT = 288
-PIPE_WIDTH = 77
+PIPE_WIDTH = 70
 
 PIPE_SPEED = 60
 -- PIPE_SPEED = 160
@@ -14,7 +14,8 @@ function Pipe.new(orientation, y)
     self.x = GAME_WIDTH
     self.y = y
 
-    self.width = PIPE_HEIGHT
+    self.width = PIPE_WIDTH
+    self.height = PIPE_HEIGHT
     self.orientation = orientation
 
     setmetatable(self, { __index = Pipe })
