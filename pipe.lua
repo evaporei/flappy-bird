@@ -1,6 +1,6 @@
 local Pipe = {}
 
-PIPE_IMAGE = love.graphics.newImage('pipe.png')
+PIPE_IMAGE = love.graphics.newImage('sprites/pipe.png')
 
 PIPE_HEIGHT = 430
 PIPE_WIDTH = 70

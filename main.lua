@@ -12,10 +12,10 @@ WINDOW_HEIGHT = 720
 GAME_WIDTH = 512
 GAME_HEIGHT = 288
 
-local background = love.graphics.newImage('background.png')
+local background = love.graphics.newImage('sprites/background.png')
 local backgroundScroll = 0
 
-local ground = love.graphics.newImage('ground.png')
+local ground = love.graphics.newImage('sprites/ground.png')
 local groundScroll = 0
 
 BACKGROUND_SCROLL_SPEED = 30

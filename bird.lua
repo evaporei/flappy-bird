@@ -5,7 +5,7 @@ GRAVITY = 20
 function Bird.new()
     local self = {}
 
-    self.image = love.graphics.newImage('bird.png')
+    self.image = love.graphics.newImage('sprites/bird.png')
     self.width = self.image:getWidth()
     self.height = self.image:getHeight()
     -- mid screen
