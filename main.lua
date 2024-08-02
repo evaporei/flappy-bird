@@ -66,6 +66,10 @@ function love.keypressed(key)
     end
 end
 
+function love.mousepressed(_, _, _)
+    stateMachine:handleInput('mouse')
+end
+
 function love.update(dt)
     backgroundScroll = (backgroundScroll + BACKGROUND_SCROLL_SPEED * dt)
         % BACKGROUND_LOOPING_POINT

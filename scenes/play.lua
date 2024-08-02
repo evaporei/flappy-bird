@@ -29,8 +29,8 @@ function PlayScene.new(stateMachine)
     return self
 end
 
-function PlayScene:handleInput(key)
-    if key == 'space' then
+function PlayScene:handleInput(input)
+    if input == 'space' or input == 'mouse' then
         self.bird:flap()
         sounds['jump']:play()
     end
