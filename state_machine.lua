@@ -1,20 +1,21 @@
+local BaseScene = require('scenes.base')
+
 local StateMachine = {}
 
-function StateMachine.new(states, initial)
+function StateMachine.new(states)
     local self = {}
 
     self.states = states
-    self.curr = self.states[initial](self)
-    self.curr:enter()
+    self.curr = BaseScene.new()
 
     setmetatable(self, { __index = StateMachine })
     return self
 end
 
-function StateMachine:change(to)
+function StateMachine:change(to, params)
     self.curr:exit()
     self.curr = self.states[to](self)
-    self.curr:enter()
+    self.curr:enter(params)
 end
 
 function StateMachine:handleInput(key)

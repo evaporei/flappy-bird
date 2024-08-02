@@ -1,6 +1,7 @@
 local BaseScene = require('scenes.base')
 local Bird = require('bird')
 local PipePair = require('pipe_pair')
+local fonts = require('fonts')
 
 local function clamp(min, val, max)
     return math.max(max, math.min(min, val))
@@ -20,6 +21,8 @@ function PlayScene.new(stateMachine)
     -- -267..-188
     self.lastY = -PIPE_HEIGHT + math.random(80) + 20
     self.spawnTimer = 0
+
+    self.score = 0
 
     setmetatable(self, { __index = PlayScene })
     return self
@@ -53,9 +56,17 @@ function PlayScene:update(dt)
     for _, pair in pairs(self.pipePairs) do
         pair:update(dt)
 
+        if not pair.scored then
+            local pipe = pair.pipes['top']
+            if pipe.x + pipe.width < self.bird.x then
+                self.score = self.score + 1
+                pair.scored = true
+            end
+        end
+
         for _, pipe in pairs(pair.pipes) do
             if self.bird:collides(pipe) then
-                self.stateMachine:change('title')
+                self.stateMachine:change('score', { score = self.score })
             end
         end
     end
@@ -67,12 +78,19 @@ function PlayScene:update(dt)
     end
 
     self.bird:update(dt)
+
+    if self.bird.y > GAME_HEIGHT - 15 then
+        self.stateMachine:change('score', { score = self.score })
+    end
 end
 
 function PlayScene:render()
     for _, pairs in pairs(self.pipePairs) do
         pairs:render()
     end
+
+    love.graphics.setFont(fonts.flappy)
+    love.graphics.print('Score: ' .. tostring(self.score), 8, 8)
 
     self.bird:render()
 end

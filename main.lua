@@ -5,6 +5,7 @@ love.graphics.setDefaultFilter('nearest', 'nearest')
 local StateMachine = require('state_machine')
 local TitleScene = require('scenes.title')
 local PlayScene = require('scenes.play')
+local ScoreScene = require('scenes.score')
 
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
@@ -27,15 +28,17 @@ GROUND_LOOPING_POINT = 576
 local stateMachine = StateMachine.new(
     {
         ['title'] = TitleScene.new,
-        ['play'] = PlayScene.new
-    },
-    'title'
+        ['play'] = PlayScene.new,
+        ['score'] = ScoreScene.new
+    }
 )
 
 function love.load()
     love.window.setTitle('Flappy Bird')
 
     math.randomseed(os.time())
+
+    stateMachine:change('title')
 
     push:setupScreen(GAME_WIDTH, GAME_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
         vsync = true,

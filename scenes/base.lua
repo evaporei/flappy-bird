@@ -1,5 +1,9 @@
 local BaseScene = {}
 
+function BaseScene.new()
+    return setmetatable({}, { __index = BaseScene })
+end
+
 function BaseScene:enter()
 end
 

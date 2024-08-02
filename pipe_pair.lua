@@ -12,6 +12,9 @@ function PipePair.new(y)
         ['bottom'] = Pipe.new('bottom', y + PIPE_HEIGHT + GAP_HEIGHT),
     }
 
+    self.remove = false
+    self.scored = false
+
     setmetatable(self, { __index = PipePair })
     return self
 end
