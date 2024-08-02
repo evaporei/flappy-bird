@@ -8,6 +8,8 @@ local PlayScene = require('scenes.play')
 local ScoreScene = require('scenes.score')
 local CountdownScene = require('scenes.countdown')
 
+local sounds = require('sounds')
+
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
 
@@ -41,6 +43,9 @@ function love.load()
     math.randomseed(os.time())
 
     stateMachine:change('title')
+
+    sounds['music']:setLooping(true)
+    sounds['music']:play()
 
     push:setupScreen(GAME_WIDTH, GAME_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
         vsync = true,

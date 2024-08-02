@@ -2,6 +2,7 @@ local BaseScene = require('scenes.base')
 local Bird = require('bird')
 local PipePair = require('pipe_pair')
 local fonts = require('fonts')
+local sounds = require('sounds')
 
 local function clamp(min, val, max)
     return math.max(max, math.min(min, val))
@@ -31,6 +32,7 @@ end
 function PlayScene:handleInput(key)
     if key == 'space' then
         self.bird:flap()
+        sounds['jump']:play()
     end
 end
 
@@ -61,11 +63,14 @@ function PlayScene:update(dt)
             if pipe.x + pipe.width < self.bird.x then
                 self.score = self.score + 1
                 pair.scored = true
+                sounds['score']:play()
             end
         end
 
         for _, pipe in pairs(pair.pipes) do
             if self.bird:collides(pipe) then
+                sounds['explosion']:play()
+                sounds['hurt']:play()
                 self.stateMachine:change('score', { score = self.score })
             end
         end
@@ -80,6 +85,8 @@ function PlayScene:update(dt)
     self.bird:update(dt)
 
     if self.bird.y > GAME_HEIGHT - 15 then
+        sounds['explosion']:play()
+        sounds['hurt']:play()
         self.stateMachine:change('score', { score = self.score })
     end
 end
