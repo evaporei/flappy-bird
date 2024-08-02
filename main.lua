@@ -6,6 +6,7 @@ local StateMachine = require('state_machine')
 local TitleScene = require('scenes.title')
 local PlayScene = require('scenes.play')
 local ScoreScene = require('scenes.score')
+local CountdownScene = require('scenes.countdown')
 
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
@@ -29,7 +30,8 @@ local stateMachine = StateMachine.new(
     {
         ['title'] = TitleScene.new,
         ['play'] = PlayScene.new,
-        ['score'] = ScoreScene.new
+        ['score'] = ScoreScene.new,
+        ['countdown'] = CountdownScene.new
     }
 )
 

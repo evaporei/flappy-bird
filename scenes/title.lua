@@ -15,7 +15,7 @@ end
 
 function TitleScene:handleInput(key)
     if key == 'enter' or key == 'return' then
-        self.stateMachine:change('play')
+        self.stateMachine:change('countdown')
     end
 end
 
